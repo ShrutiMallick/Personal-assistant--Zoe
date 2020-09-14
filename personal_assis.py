@@ -144,6 +144,149 @@ while True:
         songs=os.listdir(music_dir)
         print(songs)
         random=os.startfile(os.path.join(music_dir,songs[1]))
+        
+        elif ' the time' in query:
+        strTime=datetime.datetime.now().strftime("% H:% M:% S")
+        speak("The time is {strTime}")
+
+    elif 'send a mail' in query:
+        try:
+            speak("What should I say?")
+            content=takeCommand()
+            speak("Whom should i send")
+            to=input()
+            sendEmail(to,content)
+            speak("Email has been sent!")
+        except Exception as e:
+            print(e)
+            speak("I am not able to send this email")
+
+    elif 'weather' in query:
+        api_key="8ef61edcf1c576d65d836254e11ea420"
+        base_url="https://api.openweathermap.org/data/2.5/weather?"
+        speak("Whats the city name")
+        city_name=takeCommand()
+        complete_url=base_url+"appid="+api_key+"&q="+city_name
+        response=requests.get(complete_url)
+        x=response.json()
+        if x["cod"]!="404":
+            y=x["main"]
+            current_temperature=y["temp"]
+            current_humidity=y["humidity"]
+            z=x["weather"]
+            weather_description=z[0]["description"]
+            speak("Temperature in kelvin unit is"+str(current_temperature)+"\n humidity in percentage is"+
+                  str(current_humidity)+"\n description "+str(weather_description))
+            print("Temperature in kelvin unit is"+str(current_temperature)+"\n humidity in percentage is"+
+                  str(current_humidity)+"\n description "+str(weather_description))
+        else:
+            speak(" City Not Found ")
+
+    elif "how are you" in query:
+        speak("I am fine.Thank you")
+        speak("How are you?")
+
+    elif 'fine' in query or 'good' in query:
+        speak("It's good to know that your fine")
+
+    elif 'change name' in query:
+        speak("What would you like to call me?")
+        assname=takeCommand()
+        speak("Thanks for namimg me")
+
+    elif "What's your name" in query or "What is your name" in query:
+        speak("My friends call me")
+        speak(assname)
+        print("My friends call me",assname)
+
+    elif 'exit' in query:
+        speak("Thanks for giving me your time")
+        exit()
+
+    elif "Who made you" in query:
+        speak("I have been created by Shruti")
+
+    elif "Who are you" in query or "What can you do" in query:
+        speak('I am Zoe version 1 point o your personal virtual assistant.I am programmed to perform minor tasks like'
+              'opening youtube,google chrome,gmail ,predict time,take a photo,search,predict weather in different '
+              'cities,get top headline of news and i can also solve computational,geographical and mathematical '
+              'questions also i can crack good jokes do you want to listen some?')
+
+    elif "joke" in query or "yes i do" in query:
+        speak(pyjokes.get_joke())
+        print(pyjokes.get_joke())
+
+    elif "calculate" in query:
+        app_id="33V5YL-HYYU4PK5KL"
+        client=wolframalpha.Client('33V5YL-HYYU4PK5KL')
+        indx=query.lower().split().index('calculate')
+        query=query.split()[indx+1:]
+        res=client.query(' '.join(query))
+        answer=next(res.results).text
+        print("The answer is "+answer)
+        speak("The answer is "+answer)
+
+    elif 'search' in query or 'play':
+        query=query.replace("search"," ")
+        query=query.replace("play"," ")
+        webbrowser.open(query)
+
+    elif "who am i" in query:
+        speak("If you talk then definately you are human")
+
+    elif "Why you came to world" in query:
+        speak("Thanks to Shruti further it's a secret!")
+
+    elif "is love" in query:
+        speak("It is the 7th sense that destroys all other senses")
+
+    elif "reason for you" in query or "why were you made":
+        speak("As shruti had no work to do in lockdown she made me as her personal assisstant"
+              " and for some fun and also to learn new things")
+
+    elif 'news' in query:
+        news=webbrowser.open_new_tab("https://timesofindia.indiatimes.com/home/headlines")
+        speak('Here are some headlines from the Times of India,Happy reading!')
+        time.sleep(6)
+
+    elif 'lock window' in query:
+        speak("Locking the device")
+        ctypes.windll.user32.LockWorkStation()
+
+    elif 'shutdown system' in query:
+        speak("Hold on a Sec!Your system is on its way to shutdown")
+        subprocess.call('shutdown/p/f')
+
+    elif 'empty recycle bin' in query:
+        winshell.recycle_bin().empty(confirm=False,show_progress=False,sound=True)
+        speak("Recycle Bin recycled!")
+
+    elif "don't listen" in query or "stop listening" in query:
+        speak("for how much time you want to stop Zoe from listening commands")
+        a=int(takeCommand())
+        time.sleep(a)
+
+    elif "where is" in query:
+        query=query.replace("Where is"," ")
+        location=query
+        speak("User asked to Locate")
+        speak(location)
+        webbrowser.open("https://www.google.nl//map/place/"+location+" ")
+
+    #elif "camera" in query or "take a photo" in query or "take a pic":
+       # ec.capture(0,"ZOe Camera","imag.jpg")
+
+    elif "restart" in query:
+        subprocess.call("shutdown","/r")
+
+    elif "hibernate" in query or "sleep" in query:
+        speak("Hibernating")
+        subprocess.call("shutdown","/h")
+
+
+
+
+
 
     
 
