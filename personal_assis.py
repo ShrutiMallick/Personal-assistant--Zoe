@@ -22,7 +22,7 @@ import requests
 import shutil
 from twilio.rest import Client
 from clint.textui import progress
-#from ecapture import ecapture as ec
+from ecapture import ecapture as ec
 from gtts import gTTS                 # google text to speech
 from bs4 import BeautifulSoup
 import win32com.client as wincl
@@ -273,16 +273,31 @@ while True:
         speak(location)
         webbrowser.open("https://www.google.nl//map/place/"+location+" ")
 
-    #elif "camera" in query or "take a photo" in query or "take a pic":
-       # ec.capture(0,"ZOe Camera","imag.jpg")
+    elif "camera" in query or "take a photo" in query or "take a pic":
+        ec.capture(0,"ZOe Camera","imag.jpg")
 
     elif "restart" in query:
         subprocess.call("shutdown","/r")
 
-    elif "hibernate" in query or "sleep" in query:
+     elif "hibernate" in query or "sleep" in query:
         speak("Hibernating")
         subprocess.call("shutdown","/h")
+        
+    elif "chrome" in query:
+        speak("Google chrome")
+        os.startfile('C:\Program Files (x86)\Google\Chrome\Application\chrome.exe')
 
+    elif "firefox" in query or "mozilla" in query:
+        speak("Opening Mozilla Firefox")
+        os.startfile('C:\Program Files\Mozilla Firefox\\firefox.exe')
+    
+    elif "word" in query:
+        speak("Opening Microsoft word")
+        os.startfile('C:\Program Files\Microsoft Office\\root\Office16\WINWORD.EXE')
+
+    elif 'exit' in query:
+        speak("Thanks for giving me your time")
+        exit()
 
 
 
